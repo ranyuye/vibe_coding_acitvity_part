@@ -38,3 +38,6 @@ yarn-error.log*
 /.wrangler/
 /outputs/
 /work/
+
+# Local source artwork; deployable copies live in public/assets.
+/design/
