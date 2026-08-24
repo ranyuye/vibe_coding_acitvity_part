@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { encodeSession } from "../../../lib/session";
 
 type TokenResponse = {
   code?: number;
@@ -10,26 +11,6 @@ type FeishuUser = {
   code?: number;
   data?: { open_id?: string; tenant_key?: string; name?: string; avatar_url?: string };
 };
-
-function toBase64Url(value: string | ArrayBuffer) {
-  const bytes = typeof value === "string" ? new TextEncoder().encode(value) : new Uint8Array(value);
-  let binary = "";
-  bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
-  return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "");
-}
-
-async function encodeSession(data: object, secret: string) {
-  const payload = toBase64Url(JSON.stringify(data));
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"],
-  );
-  const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(payload));
-  return `${payload}.${toBase64Url(signature)}`;
-}
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -70,8 +51,12 @@ export async function GET(request: Request) {
     const user = (await userResult.json()) as FeishuUser;
     if (!userResult.ok || !user.data?.open_id) throw new Error("user_failed");
 
-    const response = NextResponse.redirect(new URL("/dashboard", request.url));
+    const returnToCookie = request.headers.get("cookie")?.match(/(?:^|; )oauth_return_to=([^;]+)/)?.[1];
+    const decodedReturnTo = returnToCookie ? decodeURIComponent(returnToCookie) : "/";
+    const returnTo = decodedReturnTo.startsWith("/") && !decodedReturnTo.startsWith("//") ? decodedReturnTo : "/";
+    const response = NextResponse.redirect(new URL(returnTo, request.url));
     response.cookies.delete("oauth_state");
+    response.cookies.delete("oauth_return_to");
     response.cookies.set("vote_session", await encodeSession({
       sub: user.data.open_id,
       tenant: user.data.tenant_key,

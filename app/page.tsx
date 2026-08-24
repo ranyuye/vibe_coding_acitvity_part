@@ -1,120 +1,224 @@
 import Link from "next/link";
+import { SiteHeader } from "./components/SiteHeader";
 
-type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+const tracks = [
+  {
+    index: "01",
+    name: "业务实战",
+    label: "WORK",
+    copy: "把日常工作里的真实问题，做成能被使用的轻量工具。",
+    tone: "track-purple",
+  },
+  {
+    index: "02",
+    name: "生活工具",
+    label: "LIFE",
+    copy: "从自己的需求出发，让一个小想法解决生活中的具体麻烦。",
+    tone: "track-blue",
+  },
+  {
+    index: "03",
+    name: "艺术游戏",
+    label: "PLAY",
+    copy: "用代码表达审美、情绪和玩法，让灵感成为可体验的作品。",
+    tone: "track-orange",
+  },
+];
 
-function Notice({ type }: { type?: string }) {
-  if (!type) return null;
+const schedule = [
+  { date: "08.19", title: "开放报名", icon: "↗" },
+  { date: "09.07", title: "作品提交", icon: "⚑" },
+  { date: "09.11", title: "线上市集", icon: "▦" },
+];
 
-  const messages: Record<string, string> = {
-    oauth_failed: "登录没有完成，请重新尝试。",
-    invalid_state: "登录请求已过期，请重新发起登录。",
-    config_missing: "登录服务尚未完成配置，请联系活动管理员。",
-  };
+const trainingSessions = [
+  {
+    date: "2026.09.03 / 周四",
+    time: "16:00 - 17:00",
+    title: "产品经理思维培训",
+    href: "https://www.feishu.cn/calendar/share?token=28f668a7d3d9042e638536858cbfcdbf",
+  },
+  {
+    date: "2026.09.07 / 周一",
+    time: "14:00 - 17:00",
+    title: "中期帮扶",
+    href: "https://www.feishu.cn/calendar/share?token=a453d9a4936baf5d92d76dbeea804f30",
+  },
+  {
+    date: "2026.09.11 / 周五",
+    time: "14:00 - 17:00",
+    title: "部署帮扶",
+    href: "https://www.feishu.cn/calendar/share?token=b2e24bc912d428007f499d0f4af25f49",
+  },
+];
 
+export default function Home() {
   return (
-    <div className="notice" role="alert">
-      {messages[type] ?? "登录暂时不可用，请稍后重试。"}
-    </div>
-  );
-}
+    <main className="home-shell street-home">
+      <SiteHeader variant="street" />
 
-function FeishuMark() {
-  return (
-    <span className="feishu-mark" aria-hidden="true">
-      <i />
-      <i />
-      <i />
-      <i />
-    </span>
-  );
-}
+      <section className="street-hero" aria-labelledby="hero-title">
+        <div className="hero-reference-stage">
+          <h1 id="hero-title" className="sr-only">VIBE CODING 创作季</h1>
+          <img
+            className="hero-material hero-material-title"
+            src="/assets/collage/vibe-coding-title.png"
+            alt="VIBE CODING"
+          />
+          <p className="hero-material-slogan">让想法落地 <b>「花」</b>生</p>
+          <img
+            className="hero-material hero-material-logo"
+            src="/assets/collage/vibe-logo.png"
+            alt="Vibe Coding 创作季 Logo"
+          />
+          <img
+            className="hero-material hero-material-round"
+            src="/assets/collage/round-01.png"
+            alt="当前轮次：ROUND 01"
+          />
+          <Link className="hero-material-link hero-material-register" href="/register">
+            <img src="/assets/collage/register-button.png" alt="" />
+            <span className="sr-only">立即报名</span>
+          </Link>
+          <Link className="hero-material-link hero-material-market" href="/entries">
+            <img src="/assets/collage/market-button.png" alt="" />
+            <span className="sr-only">作品市集</span>
+          </Link>
+          <img
+            className="hero-material hero-material-timeline"
+            src="/assets/collage/timeline-strip.png"
+            alt="赛程：08.19 报名，09.07 作品提交，09.11 线上市集"
+          />
+        </div>
+      </section>
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
-  const params = await searchParams;
-  const error = Array.isArray(params.error) ? params.error[0] : params.error;
+      <section className="street-screen street-about" id="about" aria-labelledby="about-title">
+        <div className="street-section-head">
+          <p><span>02</span> ABOUT THE EVENT</p>
+          <div className="pixel-dots" aria-hidden="true"><i /><i /><i /><i /></div>
+        </div>
 
-  return (
-    <main className="login-shell">
-      <header className="site-header">
-        <Link className="brand" href="/" aria-label="创意作品征集与投票平台首页">
-          <span className="brand-symbol" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </span>
-          <span>创意作品征集与投票平台</span>
-        </Link>
-        <div className="round-badge">2026</div>
-      </header>
+        <div className="street-about-grid">
+          <div className="street-about-copy">
+            <p className="collage-label">不设技术门槛 · 个人参赛</p>
+            <h2 id="about-title">不是考试，<br />是一场<span>创作市集</span></h2>
+            <p>Vibe Coding 创作季面向公司全员。我们更在意你的想法解决了什么、带来了什么体验，而不是使用了多复杂的技术。</p>
+            <ul>
+              <li><b>轻竞技</b><span>让创作被看见，不制造技术焦虑</span></li>
+              <li><b>重展示</b><span>用作品交流想法，用体验获得反馈</span></li>
+            </ul>
+          </div>
 
-      <section className="login-stage">
-        <div className="ambient ambient-one" />
-        <div className="ambient ambient-two" />
+          <aside className="round-poster" aria-label="当前轮次">
+            <span>NOW PLAYING</span>
+            <strong>ROUND<br /><em>01</em></strong>
+            <p>作品征集进行中</p>
+            <div className="pixel-progress" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
+          </aside>
+        </div>
 
-        <div className="intro-panel">
-          <p className="eyebrow"><span /> 让每一个好创意被看见</p>
-          <h1>
-            提交你的作品，
-            <br />
-            为喜欢的创意投票。
-          </h1>
-          <p className="intro-copy">
-            一个面向创作者与评选者的作品平台。
-            <br />
-            登录后即可提交作品、浏览入围项目并参与投票。
-          </p>
-          <div className="flow" aria-label="活动流程">
-            <span><b>01</b> 登录</span>
-            <i />
-            <span><b>02</b> 提交作品</span>
-            <i />
-            <span><b>03</b> 参与投票</span>
+        <div className="track-section" id="tracks">
+          <div className="track-title-row">
+            <p>CHOOSE YOUR TRACK</p>
+            <h3>三条赛道，<span>一种冲动</span></h3>
+          </div>
+          <div className="track-grid">
+            {tracks.map((track) => (
+              <article className={`track-card ${track.tone}`} key={track.name}>
+                <span className="track-index">{track.index}</span>
+                <small>{track.label}</small>
+                <h4>{track.name}</h4>
+                <p>{track.copy}</p>
+                <b aria-hidden="true">↗</b>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="street-screen street-training" id="training" aria-labelledby="training-title">
+        <div className="street-section-head street-section-head-dark">
+          <p><span>03</span> TRAINING CAMP</p>
+          <div className="training-sticker" aria-hidden="true">LEARN / BUILD / SHIP</div>
+        </div>
+
+        <div className="training-layout">
+          <div className="training-intro">
+            <p className="collage-label">VIBE CODING 创作季 · 培训板块</p>
+            <h2 id="training-title">有人带路，<br /><span>创作更快。</span></h2>
+            <p>从产品思维到中期排障、最终部署，三场集中培训陪你把作品真正做出来。</p>
+          </div>
+
+          <div className="training-grid">
+            <a
+              className="training-card training-archive training-calendar"
+              href="https://guanghe.feishu.cn/sync/EwBbdD69fsEbr5bf6qWcY5wwnvb"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="training-card-index">ARCHIVE / 01</span>
+              <p>往期培训资料</p>
+              <h3>Codex 训练营</h3>
+              <strong>课程主要信息汇总</strong>
+              <small>查看往期资料 <b aria-hidden="true">↗</b></small>
+            </a>
+
+            {trainingSessions.map((session, index) => (
+              <a
+                className="training-card training-calendar"
+                href={session.href}
+                target="_blank"
+                rel="noreferrer"
+                key={session.href}
+              >
+                <span className="training-card-index">CALENDAR / 0{index + 2}</span>
+                <p>{session.date}</p>
+                <h3>{session.title}</h3>
+                <strong>{session.time} (GMT+8)</strong>
+                <small>加入飞书日程 <b aria-hidden="true">↗</b></small>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="street-screen street-finale" id="schedule" aria-labelledby="schedule-title">
+        <div className="street-section-head street-section-head-dark">
+          <p><span>04</span> EVENT TIMELINE</p>
+          <div className="pixel-hearts" aria-hidden="true">♥ ♥ ♥</div>
+        </div>
+
+        <div className="schedule-poster">
+          <div className="schedule-lead">
+            <p>ROUND 01 / 进行中</p>
+            <h2 id="schedule-title">把灵感，<br /><span>推上舞台。</span></h2>
+          </div>
+          <ol className="schedule-list">
+            {schedule.map((item, index) => (
+              <li key={item.date} className={index === 0 ? "is-current" : ""}>
+                <span className="schedule-icon" aria-hidden="true">{item.icon}</span>
+                <div><time>{item.date}</time><strong>{item.title}</strong></div>
+                <i aria-hidden="true" />
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="final-cta">
+          <p>VIBE CODING 2026</p>
+          <h2>让想法落地<br /><span>「<b className="peanut-shake">花</b>」<b className="peanut-shake">生</b></span></h2>
+          <div>
+            <Link className="paper-cta paper-cta-lime" href="/register">立即报名 <span>↗</span></Link>
+            <Link className="paper-cta paper-cta-orange" href="/entries">看看作品 <span>→</span></Link>
           </div>
         </div>
 
-        <section className="login-card" aria-labelledby="login-title">
-          <div className="card-kicker">WELCOME</div>
-          <h2 id="login-title">欢迎参与</h2>
-          <p>请使用飞书账号登录，继续提交作品或参与投票。</p>
-
-          <Notice type={error} />
-
-          <a className="feishu-login" href="/api/auth/login">
-            <FeishuMark />
-            <span>使用飞书账号登录</span>
-            <span className="arrow" aria-hidden="true">→</span>
-          </a>
-
-          <div className="assurance">
-            <span className="shield" aria-hidden="true">✓</span>
-            <span>
-              <strong>安全登录</strong>
-              仅用于确认参与身份，不会读取聊天和文档内容
-            </span>
-          </div>
-
-          <div className="divider"><span>登录后你可以</span></div>
-
-          <ul className="benefits">
-            <li><span>↗</span> 提交并管理自己的参赛作品</li>
-            <li><span>♡</span> 为你支持的作品投出唯一一票</li>
-            <li><span>◎</span> 随时查看作品与活动进展</li>
-          </ul>
-
-          <p className="terms">
-            登录即表示你同意遵守本次活动规则与隐私说明
-          </p>
-        </section>
+        <footer className="street-footer">
+          <span>VIBE CODING 创作季</span>
+          <span>业务实战 / 生活工具 / 艺术游戏</span>
+          <a href="#top">BACK TO TOP ↑</a>
+        </footer>
       </section>
-
-      <footer>
-        <span>© 2026 创意作品征集与投票平台</span>
-        <span>公平 · 真实 · 尊重每一份创意</span>
-      </footer>
     </main>
   );
 }

@@ -9,6 +9,11 @@ export async function GET(request: Request) {
   }
 
   const state = crypto.randomUUID();
+  const requestUrl = new URL(request.url);
+  const requestedReturnTo = requestUrl.searchParams.get("return_to") || "/";
+  const returnTo = requestedReturnTo.startsWith("/") && !requestedReturnTo.startsWith("//")
+    ? requestedReturnTo
+    : "/";
   const authorize = new URL("https://accounts.feishu.cn/open-apis/authen/v1/authorize");
   authorize.searchParams.set("client_id", appId);
   authorize.searchParams.set("redirect_uri", redirectUri);
@@ -17,6 +22,13 @@ export async function GET(request: Request) {
 
   const response = NextResponse.redirect(authorize);
   response.cookies.set("oauth_state", state, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 600,
+    path: "/",
+  });
+  response.cookies.set("oauth_return_to", returnTo, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
