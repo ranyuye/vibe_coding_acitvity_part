@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { SiteHeader } from "./components/SiteHeader";
 
 const tracks = [
@@ -76,14 +75,14 @@ export default function Home() {
             src="/assets/collage/round-01.png"
             alt="当前轮次：ROUND 01"
           />
-          <Link className="hero-material-link hero-material-register" href="/register">
+          <a className="hero-material-link hero-material-register" href="/register">
             <img src="/assets/collage/register-button.png" alt="" />
             <span className="sr-only">立即报名</span>
-          </Link>
-          <Link className="hero-material-link hero-material-market" href="/entries">
+          </a>
+          <a className="hero-material-link hero-material-market" href="/entries">
             <img src="/assets/collage/market-button.png" alt="" />
             <span className="sr-only">作品市集</span>
-          </Link>
+          </a>
           <img
             className="hero-material hero-material-timeline"
             src="/assets/collage/timeline-strip.png"
@@ -208,8 +207,8 @@ export default function Home() {
           <p>VIBE CODING 2026</p>
           <h2>让想法落地<br /><span>「<b className="peanut-shake">花</b>」<b className="peanut-shake">生</b></span></h2>
           <div>
-            <Link className="paper-cta paper-cta-lime" href="/register">立即报名 <span>↗</span></Link>
-            <Link className="paper-cta paper-cta-orange" href="/entries">看看作品 <span>→</span></Link>
+            <a className="paper-cta paper-cta-lime" href="/register">立即报名 <span>↗</span></a>
+            <a className="paper-cta paper-cta-orange" href="/entries">看看作品 <span>→</span></a>
           </div>
         </div>
 

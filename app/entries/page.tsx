@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { SiteHeader } from "../components/SiteHeader";
 
 export default function EntriesPage() {
@@ -7,7 +6,7 @@ export default function EntriesPage() {
       <SiteHeader variant="street" />
       <section className="entries-market-stage" aria-labelledby="market-title">
         <div className="entries-market-utility">
-          <Link className="page-back-link" href="/">← 返回创作季主页</Link>
+          <a className="page-back-link" href="/">← 返回创作季主页</a>
           <span>ENTRIES / 2026</span>
         </div>
 

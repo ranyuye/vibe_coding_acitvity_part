@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { SiteHeader } from "../components/SiteHeader";
 import { RegistrationClient } from "./RegistrationClient";
 
@@ -8,7 +7,7 @@ export default function RegisterPage() {
       <SiteHeader variant="street" />
       <div className="registration-layout">
         <aside className="registration-aside">
-          <Link className="page-back-link" href="/">← 返回创作季主页</Link>
+          <a className="page-back-link" href="/">← 返回创作季主页</a>
           <p className="micro-label">VIBE CODING 2026</p>
           <h2>创作季报名</h2>
           <p>从一个名字开始，让你的想法在代码中生长。</p>
