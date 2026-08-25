@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { secureCookiesEnabled } from "../../../lib/cookie-options";
 import { encodeSession } from "../../../lib/session";
 
 type TokenResponse = {
@@ -65,7 +66,7 @@ export async function GET(request: Request) {
       exp: Date.now() + 24 * 60 * 60 * 1000,
     }, sessionSecret), {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: secureCookiesEnabled(),
       sameSite: "lax",
       maxAge: 86400,
       path: "/",

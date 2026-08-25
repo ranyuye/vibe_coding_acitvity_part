@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { secureCookiesEnabled } from "../../../lib/cookie-options";
 
 export async function GET(request: Request) {
   const appId = process.env.FEISHU_APP_ID;
@@ -23,14 +24,14 @@ export async function GET(request: Request) {
   const response = NextResponse.redirect(authorize);
   response.cookies.set("oauth_state", state, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: secureCookiesEnabled(),
     sameSite: "lax",
     maxAge: 600,
     path: "/",
   });
   response.cookies.set("oauth_return_to", returnTo, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: secureCookiesEnabled(),
     sameSite: "lax",
     maxAge: 600,
     path: "/",
