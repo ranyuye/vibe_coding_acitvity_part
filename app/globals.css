@@ -1493,6 +1493,247 @@ body {
   }
 }
 
+/* Hero quest route — live progress from 08.27 to 09.17. */
+.hero-level-map {
+  right:-.3%;
+  bottom:-.5%;
+  width:60.8%;
+  height:22%;
+  min-height:150px;
+  padding:18px 5.2% 14px;
+  color:#080711;
+  background:
+    radial-gradient(circle at 18% 26%,rgba(8,7,17,.08) 0 1px,transparent 1.5px) 0 0/9px 9px,
+    linear-gradient(96deg,rgba(255,255,255,.34),transparent 45%,rgba(8,7,17,.045)),
+    #fff4d4;
+  clip-path:polygon(0 13%,6% 4%,14% 10%,23% 2%,33% 9%,43% 1%,54% 8%,65% 2%,77% 9%,88% 1%,100% 8%,99% 92%,91% 100%,81% 94%,70% 100%,59% 94%,48% 100%,37% 94%,25% 100%,13% 94%,2% 100%);
+  transform:rotate(-.25deg);
+  filter:drop-shadow(0 -5px 0 rgba(8,7,17,.42));
+  overflow:hidden;
+  pointer-events:none;
+}
+.level-map-head {
+  position:absolute;
+  z-index:4;
+  left:5.5%;
+  right:4%;
+  top:10%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  font:900 clamp(8px,.68vw,11px)/1 var(--font-mono);
+  letter-spacing:.1em;
+}
+.level-map-head span { color:#7c3aed; }
+.level-map-head strong {
+  padding:4px 8px;
+  color:#fff4d4;
+  background:#080711;
+  box-shadow:3px 3px 0 #cfff00;
+  transform:rotate(1deg);
+  white-space:nowrap;
+}
+.level-route {
+  position:absolute;
+  z-index:1;
+  left:0;
+  right:0;
+  top:49%;
+  height:10px;
+}
+.level-route-base,
+.level-route-fill {
+  position:absolute;
+  left:6%;
+  top:0;
+  height:100%;
+}
+.level-route-base {
+  right:4%;
+  background:repeating-linear-gradient(90deg,#080711 0 12px,transparent 12px 19px);
+  opacity:.8;
+}
+.level-route-fill {
+  z-index:2;
+  width:calc(var(--route-progress) - 6%);
+  background:linear-gradient(90deg,#cfff00 0 72%,#ff6500 100%);
+  box-shadow:0 0 0 3px #080711,0 0 13px rgba(207,255,0,.72);
+  transition:width 1.65s cubic-bezier(.2,.82,.22,1);
+  overflow:hidden;
+}
+.level-route-fill::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  width:28%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  animation:quest-scan 1.35s linear infinite;
+}
+.level-runner {
+  position:absolute;
+  z-index:5;
+  left:var(--route-progress);
+  top:50%;
+  width:27px;
+  height:27px;
+  display:grid;
+  place-items:center;
+  color:#cfff00;
+  background:#080711;
+  border:3px solid #ff6500;
+  box-shadow:3px 3px 0 #7c3aed;
+  font:950 25px/1 var(--font-mono);
+  transform:translate(-50%,-50%);
+  transition:left 1.65s cubic-bezier(.2,.82,.22,1);
+  animation:runner-jolt .75s steps(2,end) infinite;
+}
+.level-checkpoints {
+  position:absolute;
+  z-index:3;
+  inset:0;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.level-checkpoint {
+  position:absolute;
+  left:var(--checkpoint-x);
+  top:49%;
+  width:clamp(78px,7.7vw,124px);
+  display:grid;
+  justify-items:center;
+  gap:4px;
+  transform:translate(-50%,-50%);
+  text-align:center;
+}
+.level-checkpoint:first-child { transform:translate(-30%,-50%); }
+.level-checkpoint:last-child { transform:translate(-70%,-50%); }
+.level-icon {
+  width:clamp(38px,3.5vw,57px);
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  color:#cfff00;
+  background:#080711;
+  border:clamp(3px,.3vw,5px) solid #7c3aed;
+  border-radius:50%;
+  box-shadow:4px 4px 0 rgba(8,7,17,.34);
+  font:950 clamp(15px,1.55vw,25px)/1 var(--font-mono);
+  transition:filter .35s,transform .35s,background .35s,color .35s;
+}
+.level-checkpoint div {
+  min-width:0;
+  display:grid;
+  gap:1px;
+  padding:2px 6px;
+  background:#fff4d4;
+}
+.level-checkpoint time { font:950 clamp(11px,1.08vw,18px)/1 var(--font-mono); }
+.level-checkpoint strong { font-size:clamp(9px,.88vw,15px); line-height:1.1; white-space:nowrap; }
+.level-checkpoint.is-cleared .level-icon {
+  color:#080711;
+  background:#cfff00;
+  border-color:#080711;
+}
+.level-checkpoint.is-cleared div::after {
+  content:"CLEARED";
+  color:#7c3aed;
+  font:900 7px/1 var(--font-mono);
+  letter-spacing:.08em;
+}
+.level-checkpoint.is-next .level-icon {
+  color:#fff4d4;
+  border-color:#ff6500;
+  animation:checkpoint-pulse 1.35s ease-in-out infinite;
+}
+.level-checkpoint.is-locked { opacity:.48; filter:grayscale(.75); }
+.level-minor-points {
+  position:absolute;
+  z-index:4;
+  inset:0;
+}
+.level-minor-points > span {
+  position:absolute;
+  left:var(--checkpoint-x);
+  top:49%;
+  display:grid;
+  justify-items:center;
+  gap:8px;
+  transform:translate(-50%,-50%);
+  color:#5e5a59;
+}
+.level-minor-points i {
+  width:13px;
+  height:13px;
+  background:#fff4d4;
+  border:3px solid #080711;
+  transform:rotate(45deg);
+}
+.level-minor-points small {
+  padding:2px 4px;
+  background:#fff4d4;
+  font:850 clamp(7px,.62vw,10px)/1 var(--font-mono);
+  white-space:nowrap;
+}
+.level-minor-points span.is-cleared i { background:#cfff00; }
+
+@keyframes quest-scan {
+  from { transform:translateX(-120%); }
+  to { transform:translateX(420%); }
+}
+@keyframes runner-jolt {
+  0%,100% { translate:0 0; }
+  50% { translate:2px -1px; }
+}
+@keyframes checkpoint-pulse {
+  0%,100% { transform:scale(1); box-shadow:4px 4px 0 rgba(8,7,17,.34),0 0 0 0 rgba(255,101,0,.45); }
+  50% { transform:scale(1.09); box-shadow:4px 4px 0 rgba(8,7,17,.34),0 0 0 8px rgba(255,101,0,0); }
+}
+
+@media (max-width:850px) {
+  .hero-level-map {
+    left:2%;
+    right:auto;
+    top:65.3%;
+    bottom:auto;
+    width:96%;
+    height:15.2%;
+    min-height:106px;
+    padding:12px 3% 8px;
+  }
+  .level-map-head { left:4%; right:3%; top:10%; font-size:7px; }
+  .level-map-head strong { padding:3px 5px; box-shadow:2px 2px 0 #cfff00; }
+  .level-route { top:52%; height:6px; }
+  .level-runner { width:20px; height:20px; border-width:2px; font-size:18px; box-shadow:2px 2px 0 #7c3aed; }
+  .level-checkpoint { top:52%; width:67px; gap:2px; }
+  .level-icon { width:34px; border-width:3px; font-size:14px; box-shadow:2px 2px 0 rgba(8,7,17,.34); }
+  .level-checkpoint div { padding:1px 3px; }
+  .level-checkpoint time { font-size:10px; }
+  .level-checkpoint strong { font-size:8px; }
+  .level-checkpoint.is-cleared div::after { display:none; }
+  .level-minor-points > span { top:52%; gap:5px; }
+  .level-minor-points i { width:9px; height:9px; border-width:2px; }
+  .level-minor-points small { font-size:6px; }
+}
+
+@media (max-width:520px) {
+  .level-map-head span { display:none; }
+  .level-map-head { justify-content:flex-end; }
+  .level-checkpoint { width:62px; }
+  .level-checkpoint:first-child { transform:translate(-24%,-50%); }
+  .level-checkpoint:last-child { transform:translate(-76%,-50%); }
+  .level-minor-points small { display:none; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .level-route-fill,
+  .level-runner { transition:none!important; }
+  .level-route-fill::after,
+  .level-runner,
+  .level-checkpoint.is-next .level-icon { animation:none!important; }
+}
+
 /* Responsive works market assembly. */
 .entries-shell {
   min-height:100svh;

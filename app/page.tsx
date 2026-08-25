@@ -1,4 +1,5 @@
 import { SiteHeader } from "./components/SiteHeader";
+import { HeroTimeline } from "./components/HeroTimeline";
 
 const tracks = [
   {
@@ -25,9 +26,10 @@ const tracks = [
 ];
 
 const schedule = [
-  { date: "08.19", title: "开放报名", icon: "↗" },
-  { date: "09.07", title: "作品提交", icon: "⚑" },
-  { date: "09.11", title: "线上市集", icon: "▦" },
+  { date: "08.27", title: "报名开启", icon: "▶" },
+  { date: "09.03", title: "产研培训", icon: "✦" },
+  { date: "09.14", title: "作品提交", icon: "⇧" },
+  { date: "09.17", title: "线上市集", icon: "▦" },
 ];
 
 const trainingSessions = [
@@ -83,11 +85,7 @@ export default function Home() {
             <img src="/assets/collage/market-button.png" alt="" />
             <span className="sr-only">作品市集</span>
           </a>
-          <img
-            className="hero-material hero-material-timeline"
-            src="/assets/collage/timeline-strip.png"
-            alt="赛程：08.19 报名，09.07 作品提交，09.11 线上市集"
-          />
+          <HeroTimeline />
         </div>
       </section>
 
