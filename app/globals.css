@@ -1502,11 +1502,11 @@ body {
   min-height:150px;
   padding:18px 5.2% 14px;
   color:#080711;
-  background:url("/assets/collage/timeline-paper-clean.svg") center/100% 100% no-repeat;
+  background:url("/assets/collage/timeline-paper-graffiti.png") center/100% 100% no-repeat;
   -webkit-mask:none;
   mask:none;
   transform:none;
-  filter:drop-shadow(0 -4px 0 rgba(8,7,17,.38)) drop-shadow(0 8px 0 rgba(8,7,17,.26));
+  filter:drop-shadow(0 7px 10px rgba(0,0,0,.34));
   overflow:hidden;
   pointer-events:none;
 }
