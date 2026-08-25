@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1850 350" preserveAspectRatio="none">
+  <defs>
+    <filter id="paper" x="-5%" y="-10%" width="110%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018 0.22" numOctaves="2" seed="27" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0" result="mono"/>
+      <feComponentTransfer in="mono" result="grain">
+        <feFuncA type="table" tableValues="0 .13"/>
+      </feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="grain" mode="multiply"/>
+    </filter>
+  </defs>
+  <path
+    d="M18 52 L74 44 128 50 181 38 248 43 309 31 370 42 427 35 492 48 554 37 621 43 683 33 748 46 815 38 873 48 942 35 1008 43 1064 31 1124 41 1187 34 1252 45 1317 36 1384 47 1440 34 1503 42 1561 30 1628 41 1685 33 1743 44 1808 36 1836 48 L1841 286 1792 295 1734 287 1675 302 1614 292 1554 306 1491 294 1432 310 1368 300 1304 311 1241 297 1175 308 1112 295 1050 310 985 298 923 313 859 301 792 310 730 296 663 307 604 294 539 309 477 298 415 310 351 296 292 305 231 294 166 307 108 293 57 301 21 286 Z"
+    fill="#f2ead8"
+    filter="url(#paper)"
+  />
+  <path d="M70 71 C340 55 589 68 846 58 S1347 64 1768 56" fill="none" stroke="#ffffff" stroke-opacity=".22" stroke-width="4" stroke-dasharray="19 34"/>
+  <path d="M95 276 C374 291 671 275 944 289 S1460 276 1772 286" fill="none" stroke="#5d5349" stroke-opacity=".12" stroke-width="3" stroke-dasharray="7 28"/>
+</svg>
