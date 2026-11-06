@@ -1,0 +1,40 @@
+schemaVersion: 2
+app:
+  name: Vibe Coding 创作季
+  description: 创作季展示、飞书登录、作品报名和作品列表
+  subdomain: vibevot
+services:
+  web:
+    kind: web
+    build:
+      context: .
+      dockerfile: deploy/awesome/Dockerfile
+    port: 8080
+    env:
+      NODE_ENV: "production"
+      PORT: "8080"
+      HOST: "0.0.0.0"
+      COOKIE_SECURE: "true"
+      FEISHU_REDIRECT_URI: "https://vibevot.awesome.guanghexinzhi.cn/api/auth/callback"
+      FEISHU_CURRENT_ROUND: "1"
+    secretRefs:
+      FEISHU_APP_ID: VIBEVOT_FEISHU_APP_ID
+      FEISHU_APP_SECRET: VIBEVOT_FEISHU_APP_SECRET
+      SESSION_SECRET: VIBEVOT_SESSION_SECRET
+      FEISHU_BASE_APP_TOKEN: VIBEVOT_FEISHU_BASE_APP_TOKEN
+      FEISHU_WORKS_TABLE_ID: VIBEVOT_FEISHU_WORKS_TABLE_ID
+    resources:
+      cpu: 0.5
+      memoryMiB: 500
+    healthcheck:
+      type: http
+      path: /
+      intervalSeconds: 10
+      timeoutSeconds: 3
+      retries: 3
+      startPeriodSeconds: 30
+routes:
+  - path: /
+    match: prefix
+    service: web
+    stripPrefix: false

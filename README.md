@@ -1,3 +1,9 @@
+# Vibe Coding 创作季
+
+Awesome Deploy 部署入口请阅读 [部署说明](DEPLOY_AWESOME.md)。部署名称为 **vibevot**；根目录 `awesome.yaml` 和离线运行包已配套提供。后续更新运行 `npm test` 重新生成并验证产物，再一起推送到 `main`。
+
+以下为原开发环境说明。
+
 # vinext-starter
 
 A clean full-stack starter running on
@@ -91,7 +97,7 @@ actions tied to the current ChatGPT user. Leave public content anonymous.
 
 - `npm run dev`: start local development
 - `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
+- `npm test`: build the Awesome offline runtime and verify real pages, assets, and API authentication
 - `npm run db:generate`: generate Drizzle migrations after schema changes
 
 ## Learn More

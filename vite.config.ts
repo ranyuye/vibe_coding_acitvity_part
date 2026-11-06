@@ -34,6 +34,11 @@ const localBindingConfig = {
 };
 
 export default defineConfig(async () => {
+  // Awesome Deploy runs the same app on Node, without Cloudflare bindings.
+  if (process.env.AWESOME_DEPLOY_BUILD === "1") {
+    return { plugins: [vinext()] };
+  }
+
   // Keep Wrangler and Miniflare state project-local. These are non-secret tool
   // settings; application environment belongs in ignored `.env*` files.
   process.env.WRANGLER_WRITE_LOGS ??= "false";
